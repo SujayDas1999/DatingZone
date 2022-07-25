@@ -1,6 +1,7 @@
 ﻿using DatingZone.Data;
 using DatingZone.Entities;
 using DatingZone.Services.Interfaces;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -10,9 +11,7 @@ using System.Threading.Tasks;
 
 namespace DatingZone.Controllers
 {
-    [Route("api/[controller]")]
-    [ApiController]
-    public class UsersController : ControllerBase
+    public class UsersController : BaseApiController
     {
         private readonly IUsersService _usersService;
         public UsersController(IUsersService usersService)
@@ -20,12 +19,14 @@ namespace DatingZone.Controllers
             _usersService = usersService;
         }
 
+        [Authorize]
         [HttpGet]
         public async Task<ActionResult<IEnumerable<AppUser>>> GetAllUsers()
         {
             return await _usersService.GetAllUsers();
         }
 
+        [Authorize]
         [HttpGet("{id}")]
         public async Task<ActionResult<AppUser>> GetUserById(int id)
         {
