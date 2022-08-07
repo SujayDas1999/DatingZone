@@ -23,6 +23,8 @@ namespace DatingZone.Services
 
         public async Task<ActionResult<UserDto>> LoginUser(LoginDto loginDto)
         {
+            if (loginDto == null || loginDto.UserName == null || loginDto.Password == null) throw new PropertyMissing("Bad request");
+
             var user = await this.context.tblUsers.SingleOrDefaultAsync(x => x.UserName == loginDto.UserName);
 
             if (user == null) throw new UserUnautorized("Invalid username");

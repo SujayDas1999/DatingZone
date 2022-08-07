@@ -53,6 +53,10 @@ namespace DatingZone.Controllers
             {
                 return await _accountService.LoginUser(loginDto);
             }
+            catch(PropertyMissing)
+            {
+                return BadRequest("Proprty missing");
+            }
             catch(UserUnautorized)
             {
                 return Unauthorized("Invalid UserName or Password");
