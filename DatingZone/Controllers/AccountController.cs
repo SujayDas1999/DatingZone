@@ -32,11 +32,11 @@ namespace DatingZone.Controllers
             }
             catch(UserExists)
             {
-                return BadRequest("User already exists");
+                return BadRequest("User already exists!");
             }
             catch(UserUnautorized)
             {
-                return Unauthorized("Invalid User name or Password");
+                return Unauthorized("Invalid User name or Password!");
             }
             catch (System.Exception)
             {
