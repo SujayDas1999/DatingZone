@@ -10,6 +10,7 @@ namespace DatingZone.Entities.Dtos
         [EmailAddress]
         public string EmailAddress { get; set; }
         [Required]
+        [StringLength(8, MinimumLength = 4)]
         public string Password { get; set; }
     }
 }
