@@ -1,5 +1,7 @@
 ﻿using DatingZone.Data;
 using DatingZone.Entities;
+using DatingZone.Entities.Dtos;
+using DatingZone.Repository;
 using DatingZone.Services.Interfaces;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -10,21 +12,28 @@ namespace DatingZone.Services
 {
     public class UsersService : IUsersService
     {
-        private readonly DataContext _context;
+        private readonly IUserRepository userRepository;
 
-        public UsersService(DataContext context)
+        public UsersService(IUserRepository userRepository)
         {
-            _context = context;
+            this.userRepository = userRepository;
         }
 
-        public async Task<ActionResult<IEnumerable<AppUser>>> GetAllUsers()
+        public async Task<IEnumerable<MemberDto>> GetAllUsers()
         {
-            return await _context.tblUsers.ToListAsync();
+            var users = await this.userRepository.GetMembersAsync();
+            return users;
         }
 
-        public async Task<ActionResult<AppUser>> GetUserById(int id)
+        public async Task<AppUser> GetUserById(int id)
         {
-            return await _context.tblUsers.FindAsync(id);
+            return await this.userRepository.GetUserByIdAsync(id);
+        }
+
+        public async Task<MemberDto> GetUserByUserName(string name)
+        {
+            var user = await this.userRepository.GetMemberAsync(name);
+            return user;
         }
     }
 }

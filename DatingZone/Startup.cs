@@ -1,5 +1,7 @@
 using DatingZone.Data;
+using DatingZone.Helpers;
 using DatingZone.Middleware;
+using DatingZone.Repository;
 using DatingZone.Services;
 using DatingZone.Services.Interfaces;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
@@ -47,6 +49,8 @@ namespace DatingZone
             services.AddScoped<IUsersService, UsersService>();
             services.AddScoped<IAccountService, AccountService>();
             services.AddScoped<ITokenService, TokenService>();
+            services.AddScoped<IUserRepository, UserRepository>();
+            services.AddAutoMapper(typeof(AutoMapperProfiles).Assembly);
             services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
                 .AddJwtBearer(options =>
                 {
