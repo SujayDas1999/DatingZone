@@ -24,6 +24,7 @@
               "./node_modules/bootstrap/dist/css/bootstrap.min.css",
               "./node_modules/font-awesome/css/font-awesome.css",
               "./node_modules/ngx-toastr/toastr.css",
+              "node_modules/ngx-spinner/animations/ball-scale-multiple.css",
               "src/styles.css"
             ],
             "scripts": []
@@ -95,5 +96,7 @@
       }
     }
   },
-  "defaultProject": "DatingZoneClient"
+  "cli": {
+    "analytics": false
+  }
 }

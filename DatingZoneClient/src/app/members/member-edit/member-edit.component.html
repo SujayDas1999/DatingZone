@@ -23,7 +23,7 @@
         </div>
         <div>
           <strong>Age :</strong>
-          <p>{{ member.Age }}</p>
+          <p>{{ member.age }}</p>
         </div>
         <div>
           <strong>Member Since :</strong>
@@ -31,7 +31,7 @@
         </div>
         <div>
           <strong>Last Active :</strong>
-          <p>{{ member.lastActive | date: "fullDate" }}</p>
+          <p>{{ member.lastActive | date : "fullDate" }}</p>
         </div>
       </div>
       <div class="card-footer">
@@ -72,11 +72,11 @@
             class="form-control"
           ></textarea>
           <h4 class="mt-2">Personal Details:</h4>
-          <div class="form-inline">
-            <label for="email">Email Address</label>
+          <div class="d-flex flex-row align-items-center">
+            <label for="emailAddress">Email</label>
             <input
               type="email"
-              name="email"
+              name="emailAddress"
               class="form-control mx-2"
               [(ngModel)]="member.emailAddress"
             />
@@ -98,7 +98,7 @@
         </form>
       </tab>
       <tab heading="Edit Photos">
-        <p>Edit photos here</p>
+        <app-photo-editor [member]="member"></app-photo-editor>
       </tab>
     </tabset>
   </div>

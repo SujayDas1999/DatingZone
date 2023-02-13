@@ -13,19 +13,19 @@ namespace DatingZone.Services
 {
     public class AccountService : IAccountService
     {
-        private readonly DataContext context;
-        private readonly ITokenService tokenService;
+        private readonly DataContext _context;
+        private readonly ITokenService _tokenService;
         public AccountService(DataContext context, ITokenService tokenService)
         {
-            this.context = context;
-            this.tokenService = tokenService;
+            _context = context;
+            _tokenService = tokenService;
         }
 
         public async Task<ActionResult<UserDto>> LoginUser(LoginDto loginDto)
         {
             if (loginDto == null || loginDto.UserName == null || loginDto.Password == null) throw new PropertyMissing("Bad request");
 
-            var user = await this.context.tblUsers.SingleOrDefaultAsync(x => x.UserName == loginDto.UserName);
+            var user = await _context.tblUsers.SingleOrDefaultAsync(x => x.UserName == loginDto.UserName);
 
             if (user == null) throw new UserUnautorized("Invalid username");
 
@@ -40,7 +40,7 @@ namespace DatingZone.Services
             return new UserDto
             {
                 UserName = loginDto.UserName,
-                Token = this.tokenService.CreateToken(user)
+                Token = _tokenService.CreateToken(user)
             };
 
         }
@@ -61,21 +61,21 @@ namespace DatingZone.Services
             };
 
 
-            this.context.Add(user);
+            _context.Add(user);
 
-            await this.context.SaveChangesAsync();
+            await _context.SaveChangesAsync();
 
             return new UserDto
             {
                 UserName = registerDto.UserName,
-                Token = this.tokenService.CreateToken(user)
+                Token = _tokenService.CreateToken(user)
             };
             
         }
 
         private async Task<bool> UserExists(string username, string email)
         {
-            return await this.context.tblUsers.AnyAsync(x => x.UserName.ToLower() == username || x.EmailAddress.ToLower() == email);
+            return await _context.tblUsers.AnyAsync(x => x.UserName.ToLower() == username || x.EmailAddress.ToLower() == email);
         }
 
     }

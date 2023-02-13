@@ -1,4 +1,5 @@
-﻿using DatingZone.Entities;
+﻿using DatingZone.Data;
+using DatingZone.Entities;
 using DatingZone.Entities.Dtos;
 using System.Collections;
 using System.Collections.Generic;
@@ -12,8 +13,11 @@ namespace DatingZone.Repository
         Task<bool> SaveAllAsync();
         Task<IEnumerable<AppUser>> GetUsersAsync();
         Task<AppUser> GetUserByIdAsync(int id);
-        Task<AppUser> GetUserByUserNameAsync(string name);
+        Task<ServiceResponse<AppUser>> GetUserByUserNameAsync(string name);
         Task<IEnumerable<MemberDto>> GetMembersAsync();
         Task<MemberDto> GetMemberAsync(string username);
+
+        Task<bool> UpdateUser(AppUser appUser);
+
     }
 }

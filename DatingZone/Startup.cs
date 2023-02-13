@@ -50,6 +50,7 @@ namespace DatingZone
             services.AddScoped<IAccountService, AccountService>();
             services.AddScoped<ITokenService, TokenService>();
             services.AddScoped<IUserRepository, UserRepository>();
+            services.AddScoped<IPhotoService, PhotoService>();
             services.AddAutoMapper(typeof(AutoMapperProfiles).Assembly);
             services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
                 .AddJwtBearer(options =>
@@ -62,11 +63,16 @@ namespace DatingZone
                         ValidateAudience = false,
                     };
                 });
+            services.Configure<CloudinarySettings>(_config.GetSection("CloudinarySettings"));
+
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
+            app.UseSwagger();
+            app.UseSwaggerUI();
+
 
             app.UseMiddleware<ExceptionMiddleware>();
 

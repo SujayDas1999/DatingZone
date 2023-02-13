@@ -14,6 +14,7 @@ namespace DatingZone.Helpers
                 .ForMember(dest => dest.PhotoUrl, opt => opt.MapFrom(photo => photo.Photos.FirstOrDefault(x => x.IsMain).ImageUrl))
                 .ForMember(dest => dest.Age, opt => opt.MapFrom(user => user.DateOfBirth.CalculateAge()));
             CreateMap<Photo, PhotoDto>();
+            CreateMap<MemberEditDto, AppUser>();
         }
     }
 }

@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, HostListener, OnInit, ViewChild } from '@angular/core';
 import { NgForm } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
@@ -17,6 +17,13 @@ export class MemberEditComponent implements OnInit {
   public member: Member;
   public user: User;
   @ViewChild('editForm') public editForm: NgForm;
+  @HostListener('window:beforeunload', ['$event']) unloadNotification(
+    $event: any
+  ) {
+    if (this.editForm.dirty) {
+      $event.returnValue = true;
+    }
+  }
 
   constructor(
     private memberService: MemberService,
@@ -39,8 +46,21 @@ export class MemberEditComponent implements OnInit {
   }
 
   public updateMember(): void {
-    console.log(this.member);
-    this.toastrService.success('Edit Success');
-    this.editForm.reset(this.member);
+    this.memberService.updateMember(this.member).subscribe({
+      next: (_) => {
+        this.toastrService.success('Edit Success');
+        this.editForm.reset(this.member);
+      },
+      error: (err) => {
+        const serverError = [];
+        Object.entries(err.error.errors).map((err) => {
+          serverError.push(err);
+        });
+
+        serverError.forEach((err) => {
+          this.toastrService.error(err[1][0]);
+        });
+      },
+    });
   }
 }

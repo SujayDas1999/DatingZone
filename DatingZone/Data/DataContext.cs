@@ -7,8 +7,10 @@ namespace DatingZone.Data
     {
         public DataContext(DbContextOptions options) : base(options)
         {
+            
         }
 
         public DbSet<AppUser> tblUsers { get; set; }
+        public DbSet<Photo> Photos { get; set; }
     }
 }
